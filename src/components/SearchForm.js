@@ -6,7 +6,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 
-export const SearchFrom = () => {
+export const SearchFrom = ({ handleQuery }) => {
   const initialValues = {
     query: "",
   };
@@ -16,7 +16,7 @@ export const SearchFrom = () => {
   });
 
   const onSubmit = ({ query }) => {
-    console.log(query);
+    handleQuery(query);
   };
 
   const formik = useFormik({
