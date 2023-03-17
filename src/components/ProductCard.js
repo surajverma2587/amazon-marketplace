@@ -6,11 +6,13 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+
 import { useBasket } from "../context/BasketProvider";
 import { getFromLocalStorage } from "../utils/getFromLocalStorage";
 
-export const ProductCard = ({ result }) => {
-  const { items, setItems } = useBasket();
+export const ProductCard = ({ result, mode }) => {
+  const { items, setItems, setResults } = useBasket();
 
   const handleAddToCart = () => {
     const newItems = [...items, result];
@@ -32,6 +34,16 @@ export const ProductCard = ({ result }) => {
     }
   };
 
+  const handleRemoveFromWishList = () => {
+    const wishListFromLS = getFromLocalStorage("wishList", []);
+
+    const newItems = wishListFromLS.filter((each) => each.asin !== result.asin);
+
+    localStorage.setItem("wishList", JSON.stringify(newItems));
+
+    setResults(newItems);
+  };
+
   return (
     <Card sx={{ width: "18rem", m: 1 }}>
       <CardMedia
@@ -48,9 +60,15 @@ export const ProductCard = ({ result }) => {
         </Typography>
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
-        <IconButton aria-label="delete" onClick={handleAddToWishList}>
-          <FavoriteIcon />
-        </IconButton>
+        {mode === "wishList" ? (
+          <IconButton aria-label="delete" onClick={handleRemoveFromWishList}>
+            <RemoveCircleIcon />
+          </IconButton>
+        ) : (
+          <IconButton aria-label="delete" onClick={handleAddToWishList}>
+            <FavoriteIcon />
+          </IconButton>
+        )}
 
         <IconButton aria-label="delete" onClick={handleAddToCart}>
           <AddShoppingCartIcon />
