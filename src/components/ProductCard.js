@@ -6,8 +6,19 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { useBasket } from "../context/BasketProvider";
 
 export const ProductCard = ({ result }) => {
+  const { items, setItems } = useBasket();
+
+  const handleAddItem = () => {
+    const newItems = [...items, result];
+
+    localStorage.setItem("items", JSON.stringify(newItems));
+
+    setItems(newItems);
+  };
+
   return (
     <Card sx={{ width: "18rem", m: 1 }}>
       <CardMedia
@@ -28,7 +39,7 @@ export const ProductCard = ({ result }) => {
           <FavoriteIcon />
         </IconButton>
 
-        <IconButton aria-label="delete">
+        <IconButton aria-label="delete" onClick={handleAddItem}>
           <AddShoppingCartIcon />
         </IconButton>
       </CardActions>

@@ -15,9 +15,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useBasket } from "../context/BasketProvider";
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
+
+  const { items } = useBasket();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -102,7 +105,7 @@ export const NavigationBar = () => {
                 navigate("/checkout");
               }}
             >
-              <Badge badgeContent={4} color="error">
+              <Badge badgeContent={items.length} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
