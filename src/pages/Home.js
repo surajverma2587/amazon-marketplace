@@ -9,7 +9,7 @@ import axios from "axios";
 import { SearchFrom } from "../components/SearchForm";
 import { SearchResults } from "../components/SearchResults";
 import { useEffect, useState } from "react";
-import data from "../mocks/productSearch.json";
+// import data from "../mocks/productSearch.json";
 
 export const Home = () => {
   const [searchTerm, setSearchTerm] = useState();
@@ -25,16 +25,16 @@ export const Home = () => {
         try {
           setError(false);
 
-          // const { data } = await axios.get(
-          //   "https://amazon23.p.rapidapi.com/product-search",
-          //   {
-          //     params: { query: searchTerm, country: "GB" },
-          //     headers: {
-          //       "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
-          //       "X-RapidAPI-Host": process.env.REACT_APP_RAPID_API_HOST,
-          //     },
-          //   }
-          // );
+          const { data } = await axios.get(
+            "https://amazon23.p.rapidapi.com/product-search",
+            {
+              params: { query: searchTerm, country: "GB" },
+              headers: {
+                "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
+                "X-RapidAPI-Host": process.env.REACT_APP_RAPID_API_HOST,
+              },
+            }
+          );
 
           setResults(data?.result || []);
         } catch (error) {

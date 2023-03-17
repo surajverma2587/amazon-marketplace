@@ -21,8 +21,6 @@ export const Checkout = () => {
     }
   }, []);
 
-  console.log(checkoutItems);
-
   return (
     <Container maxWidth="lg">
       {items.length === 0 ? (
